@@ -1,4 +1,4 @@
-WeatherAPI
+# WeatherAPI
 
 Task 1
 Visual Designs
@@ -23,7 +23,7 @@ o	Flowchart
 
 
 Task 2	
-•	Test Log
+•	Test Log (Component to be test eg. User login | Type of test to be carried out eg. functionality, security | Prequisites and Dependencies aka things it requires eg. back end database)
 •	Sources of recourses used.
 o	Images
 o	API
