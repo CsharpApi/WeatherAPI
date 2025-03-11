@@ -1,4 +1,4 @@
-# WeatherAPI
+WeatherAPI
 
 Task 1
 Visual Designs
