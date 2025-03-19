@@ -1,26 +1,3 @@
-=# WeatherAPI
-
-Task 1
-Visual Designs
-•	Logo
-•	Colour scheme with hex #
-o	Array
-o	Object
-•	Navigation bar
-o	All pages including in the app.
-•	Data Requirements
-o	ERD
-o	Data Flow
-o	ERD- Closer view
-o	Data Dictionary
-•	Algorithm
-o	Wireframes
-o	Flowchart
-•	Test Strategy
-•	Test Log
-•	Guidelines and Regulations 
-•	Appendix
-
 
 Task 2	
 •	Test Log (Component to be test eg. User login | Type of test to be carried out eg. functionality, security | Prequisites and Dependencies aka things it requires eg. back end database)
