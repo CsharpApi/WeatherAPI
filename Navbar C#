@@ -1,0 +1,115 @@
+#remove border
+FlatStyle = Flat
+
+FlatAppearance.BorderSize = 0
+In either load event or form constructor
+#navbar 
+Menu strip
+private void homeToolStripMenuItem_Click(object sender, EventArgs e)
+{
+    MessageBox.Show("Home clicked!");
+}
+
+private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+{
+    MessageBox.Show("Settings clicked!");
+}
+
+#Sign Up
+using System;
+using System.Data.SqlClient;
+using System.Windows.Forms;
+
+namespace YourAppNamespace
+{
+    public partial class RegisterForm : Form
+    {
+        string connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=UserAccountsDB;Integrated Security=True;";
+
+        public RegisterForm()
+        {
+            InitializeComponent();
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            string username = txtUsername.Text.Trim();
+            string password = txtPassword.Text;
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Username and password are required.");
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "INSERT INTO Users (Username, PasswordHash) VALUES (@Username, @Password)";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Username", username);
+                    cmd.Parameters.AddWithValue("@Password", password); // Storing as plain text
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Account created successfully!");
+                        this.Close(); // Close registration form
+                    }
+                    catch (SqlException ex)
+                    {
+                        if (ex.Number == 2627) // Unique constraint violation (username exists)
+                        {
+                            MessageBox.Show("Username already taken. Choose another.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+# Login
+
+private void btnLogin_Click(object sender, EventArgs e)
+{
+    string username = txtUsername.Text.Trim();
+    string password = txtPassword.Text;
+
+    using (SqlConnection conn = new SqlConnection(connectionString))
+    {
+        conn.Open();
+        string query = "SELECT Password FROM Users WHERE Username = @Username";
+
+        using (SqlCommand cmd = new SqlCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@Username", username);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                string storedPassword = reader["Password"].ToString();
+
+                if (storedPassword == password) // Plaintext comparison
+                {
+                    MessageBox.Show("Login successful!");
+                    // Proceed to the next form
+                }
+                else
+                {
+                    MessageBox.Show("Incorrect password.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("User not found.");
+            }
+        }
+    }
+}
